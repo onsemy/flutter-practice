@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+part 'data.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,78 +43,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _todayShoppingCategories = ['멘즈', '우먼', '잇걸'];
-  var _selectedTodayShoppingCategory = '멘즈';
-
-  final _todayShoppingTextList = [
-    [Icons.add, '추가 쿠폰 더', '마감임박!'],
-    [Icons.new_releases, '신상WEEK', '단독 런칭! 36,900원'],
-    [Icons.calculate, '15%+10%↓', '셀럽들도 많이 신는 신상']
-  ];
-  final _todayShoppingImageList = [
-    ['assets/a10913136.jpg', '오늘 단 하루! 레고 전 품목 최대 50% 파격가'],
-    ['assets/a10913136.jpg', '품절주의 XBOX S 시리즈 X | S 콘솔 예약 판매'],
-    ['assets/a10913136.jpg', '추가 쿠폰 Z플립까지 되는 괴물 충전'],
-    ['assets/a10913136.jpg', '바쏘옴므 신상 캐시미어 카디건 71%↓ 3만원대']
-  ];
-
-  final _trendList = [
-    [
-      ['assets/a10913136.jpg', '상품 설명1-1'],
-      ['assets/a10913136.jpg', '상품 설명1-2'],
-      ['assets/a10913136.jpg', '상품 설명1-3'],
-      ['assets/a10913136.jpg', '상품 설명1-4'],
-      ['assets/a10913136.jpg', '상품 설명1-5'],
-      ['assets/a10913136.jpg', '상품 설명1-6']
-    ],
-    [
-      ['assets/a10913136.jpg', '상품 설명2-1'],
-      ['assets/a10913136.jpg', '상품 설명2-2'],
-      ['assets/a10913136.jpg', '상품 설명2-3'],
-      ['assets/a10913136.jpg', '상품 설명2-4'],
-      ['assets/a10913136.jpg', '상품 설명2-5'],
-      ['assets/a10913136.jpg', '상품 설명2-6']
-    ],
-    [
-      ['assets/a10913136.jpg', '상품 설명3-1'],
-      ['assets/a10913136.jpg', '상품 설명3-2'],
-      ['assets/a10913136.jpg', '상품 설명3-3'],
-      ['assets/a10913136.jpg', '상품 설명3-4'],
-      ['assets/a10913136.jpg', '상품 설명3-5'],
-      ['assets/a10913136.jpg', '상품 설명3-6']
-    ],
-    [
-      ['assets/a10913136.jpg', '상품 설명4-1'],
-      ['assets/a10913136.jpg', '상품 설명4-2'],
-      ['assets/a10913136.jpg', '상품 설명4-3'],
-      ['assets/a10913136.jpg', '상품 설명4-4'],
-      ['assets/a10913136.jpg', '상품 설명4-5'],
-      ['assets/a10913136.jpg', '상품 설명4-6']
-    ],
-  ];
-
-  final _otherCategories = [
-    [
-      '패션/뷰티',
-      ['백화점윈도', '아울렛윈도', '스타일윈도', '뷰티윈도', '브랜드관', '디자이너윈도', '해외직구']
-    ],
-    [
-      '라이프',
-      ['리빙윈도', '키즈윈도', '펫윈도', '문방구']
-    ],
-    [
-      '푸드/헬시',
-      ['푸드윈도', '장보기', '산지직송', '지역명물', '헬시윈도', '브랜드장보기', '간편집밥', '전통주']
-    ],
-    [
-      '테크/취미',
-      ['플레이윈도', '아트윈도', '창작공방']
-    ],
-    [
-      '기타',
-      ['핫딜', '럭키투데이', '타임특가']
-    ],
-  ];
+  int _selectedBottomTap = 0;
+  var _selectedTodayShoppingCategory = _todayShoppingCategories[0]; // '멘즈';
 
   int _selectedTrendPageNumber = 0;
 
@@ -123,6 +54,12 @@ class _MyHomePageState extends State<MyHomePage> {
         length: 3,
         child: Scaffold(
             bottomNavigationBar: BottomNavigationBar(
+              onTap: (index) {
+                setState(() {
+                  _selectedBottomTap = index;
+                });
+              },
+              currentIndex: _selectedBottomTap,
               items: [
                 BottomNavigationBarItem(
                     icon: Icon(Icons.shopping_bag), label: "쇼핑 홈"),
@@ -185,6 +122,26 @@ class _MyHomePageState extends State<MyHomePage> {
     return const Divider(height: 2, thickness: 2, indent: 10, endIndent: 10);
   }
 
+  Widget createRealtimeKeyword() {
+    return Container(
+        margin: EdgeInsets.all(5.0),
+        padding: EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(5.0)),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.deepPurple,
+                  borderRadius: BorderRadius.circular(10.0)),
+              margin: EdgeInsets.all(5.0),
+              child: Text('쇼핑트렌드차트',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold))),
+        ]));
+  }
+
   Widget createOtherCategories() {
     return Container(
         margin: EdgeInsets.all(5.0),
@@ -228,10 +185,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 margin: EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
                 child: ElevatedButton(
                     onPressed: () => viewDialog('$name /// $item'),
-                    child: Text(item,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 10, color: Colors.black)),
+                    child: Expanded(
+                        child:
+                            Text(item, style: TextStyle(color: Colors.black))),
                     style: ButtonStyle(
+                        padding: MaterialStateProperty.all(EdgeInsets.zero),
                         backgroundColor:
                             MaterialStateProperty.all(Color(0xFFEEEEEE)))))
         ],
@@ -351,7 +309,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           createSeparator(0.0),
           createTodayShoppingList(),
-          for (var element in _todayShoppingTextList)
+          for (var element in _todayShoppingList[_selectedTodayShoppingCategory]
+              ['Text'])
             createTodayShoppingTextList(element[0], element[1], element[2]),
         ]));
   }
@@ -363,7 +322,8 @@ class _MyHomePageState extends State<MyHomePage> {
         shrinkWrap: true,
         crossAxisCount: 2,
         children: [
-          for (var e in _todayShoppingImageList)
+          for (var e in _todayShoppingList[_selectedTodayShoppingCategory]
+              ['Image'])
             createTodayShoppingImageItem(e[0], e[1])
         ]);
   }
@@ -373,17 +333,19 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
         padding: EdgeInsets.all(5.0),
         width: 320.0 / columnCount,
-        // height: 120.0,
-        child: GestureDetector(
-            onTap: () => viewDialog('$imagePath /// $content'),
+        // height: 320.0 / columnCount,
+        child: TextButton(
+            onPressed: () => viewDialog('$imagePath /// $content'),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Image.asset(imagePath,
                     fit: BoxFit.cover,
                     width: 320.0 / columnCount,
-                    height: 260.0 / columnCount),
-                Text(content, style: TextStyle(color: Colors.black))
+                    height: 240.0 / columnCount),
+                Flexible(
+                    fit: FlexFit.loose,
+                    child: Text(content, style: TextStyle(color: Colors.black)))
               ],
             )));
   }
@@ -393,7 +355,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Column(children: [
       createSeparator(10.0),
       GestureDetector(
-          onTap: () => setState(() => print('$preText / $content')),
+          onTap: () => viewDialog('$preText / $content'),
           child: Container(
               margin: EdgeInsets.all(3.0),
               child: Row(
