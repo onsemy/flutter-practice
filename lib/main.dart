@@ -103,13 +103,15 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (context) {
           return AlertDialog(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               title: Text('Info'),
               content: Text('$message'),
               actions: [
                 TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text('Close'))
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('Close'),
+                )
               ]);
         });
   }
@@ -124,116 +126,159 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget createRealtimeKeyword() {
     return Container(
-        margin: EdgeInsets.all(5.0),
-        padding: EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(5.0)),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      margin: EdgeInsets.all(5.0),
+      padding: EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Container(
-              decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  color: Colors.deepPurple,
-                  borderRadius: BorderRadius.circular(10.0)),
-              margin: EdgeInsets.all(5.0),
-              child: Text('쇼핑트렌드차트',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold))),
-        ]));
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Colors.deepPurple,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            margin: EdgeInsets.all(5.0),
+            child: Text(
+              '쇼핑트렌드차트',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget createOtherCategories() {
     return Container(
-        margin: EdgeInsets.all(5.0),
-        padding: EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(5.0)),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      margin: EdgeInsets.all(5.0),
+      padding: EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Container(
-              margin: EdgeInsets.all(5.0),
-              child: Text('더 많은 상품이 궁금하다면?',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold))),
+            margin: EdgeInsets.all(5.0),
+            child: Text(
+              '더 많은 상품이 궁금하다면?',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+          ),
           for (var category in _otherCategories)
             createCategory(category[0], category[1])
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget createCategory(String name, List<String> list) {
     return Container(
-        child: Column(children: [
-      SizedBox(height: 10),
-      Row(children: [
-        Text('| $name',
-            style: TextStyle(
+      child: Column(
+        children: [
+          SizedBox(height: 10),
+          Row(children: [
+            Text(
+              '| $name',
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Colors.deepPurple)),
-        createSeparator(10.0)
-      ]),
-      GridView.count(
-        shrinkWrap: true,
-        crossAxisCount: 4,
-        physics: NeverScrollableScrollPhysics(),
-        crossAxisSpacing: 2.0,
-        mainAxisSpacing: 2.0,
-        childAspectRatio: 1.5,
-        children: [
-          for (var item in list)
-            Container(
-                margin: EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
-                child: ElevatedButton(
+                color: Colors.deepPurple,
+              ),
+            ),
+            createSeparator(10.0)
+          ]),
+          GridView.count(
+            shrinkWrap: true,
+            crossAxisCount: 4,
+            physics: NeverScrollableScrollPhysics(),
+            crossAxisSpacing: 2.0,
+            mainAxisSpacing: 2.0,
+            childAspectRatio: 1.5,
+            children: [
+              for (var item in list)
+                Container(
+                  margin: EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
+                  child: ElevatedButton(
                     onPressed: () => viewDialog('$name /// $item'),
                     child: Expanded(
-                        child:
-                            Text(item, style: TextStyle(color: Colors.black))),
+                      child: Text(
+                        item,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
                     style: ButtonStyle(
-                        padding: MaterialStateProperty.all(EdgeInsets.zero),
-                        backgroundColor:
-                            MaterialStateProperty.all(Color(0xFFEEEEEE)))))
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                      backgroundColor:
+                          MaterialStateProperty.all(Color(0xFFEEEEEE)),
+                    ),
+                  ),
+                )
+            ],
+          )
         ],
-      )
-    ]));
+      ),
+    );
   }
 
   Widget createMustHaveLive() {
     return Container(
-        margin: EdgeInsets.all(5.0),
-        padding: EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(5.0)),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      margin: EdgeInsets.all(5.0),
+      padding: EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(5.0)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Container(
-              margin: EdgeInsets.all(5.0),
-              child: Text('놓치면 안될 혜택 가득 LIVE',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold))),
+            margin: EdgeInsets.all(5.0),
+            child: Text(
+              '놓치면 안될 혜택 가득 LIVE',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+          ),
           Container(
-              height: 130.0,
-              child: ListView(scrollDirection: Axis.horizontal, children: [
+            height: 130.0,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
                 for (var item in _trendList[0])
                   createTodayShoppingImageItem(item[0], item[1], columnCount: 3)
-              ]))
-        ]));
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   Widget createTrendPick() {
     return Container(
-        margin: EdgeInsets.all(5.0),
-        padding: EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(5.0)),
-        child: Column(children: [
+      margin: EdgeInsets.all(5.0),
+      padding: EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(5.0)),
+      child: Column(
+        children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Container(
-                margin: EdgeInsets.all(5.0),
-                child: Text('트렌드Pick | 스타일 UP',
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold))),
+              margin: EdgeInsets.all(5.0),
+              child: Text(
+                '트렌드Pick | 스타일 UP',
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+            ),
             IconButton(
                 icon: Icon(Icons.arrow_right),
                 onPressed: () => viewDialog('트렌드Pick | 스타일 UP'))
@@ -243,54 +288,65 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                  icon: Icon(Icons.arrow_left),
-                  onPressed: () => setState(() => _selectedTrendPageNumber > 0
-                      ? _selectedTrendPageNumber--
-                      : _selectedTrendPageNumber = _trendList.length - 1)),
+                icon: Icon(Icons.arrow_left),
+                onPressed: () => setState(() => _selectedTrendPageNumber > 0
+                    ? _selectedTrendPageNumber--
+                    : _selectedTrendPageNumber = _trendList.length - 1),
+              ),
               Text('${_selectedTrendPageNumber + 1} / ${_trendList.length}'),
               IconButton(
-                  icon: Icon(Icons.arrow_right),
-                  onPressed: () => setState(() =>
-                      _selectedTrendPageNumber < _trendList.length - 1
-                          ? _selectedTrendPageNumber++
-                          : _selectedTrendPageNumber = 0)),
+                icon: Icon(Icons.arrow_right),
+                onPressed: () => setState(() =>
+                    _selectedTrendPageNumber < _trendList.length - 1
+                        ? _selectedTrendPageNumber++
+                        : _selectedTrendPageNumber = 0),
+              ),
             ],
           )
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget createTrendList() {
     return GridView.count(
-        crossAxisCount: 3,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        children: [
-          for (var item in _trendList[_selectedTrendPageNumber])
-            createTodayShoppingImageItem(item[0], item[1], columnCount: 3)
-        ]);
+      crossAxisCount: 3,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      children: [
+        for (var item in _trendList[_selectedTrendPageNumber])
+          createTodayShoppingImageItem(item[0], item[1], columnCount: 3)
+      ],
+    );
   }
 
   Widget createTodayShopping() {
     return Container(
-        margin: EdgeInsets.all(5.0),
-        padding: EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(5.0)),
-        child: Column(children: [
+      margin: EdgeInsets.all(5.0),
+      padding: EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Column(
+        children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                  margin: EdgeInsets.all(5.0),
-                  child: Text('오늘의 쇼핑',
-                      style: TextStyle(
-                          fontSize: 15, fontWeight: FontWeight.bold))),
+                margin: EdgeInsets.all(5.0),
+                child: Text(
+                  '오늘의 쇼핑',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+              ),
               DropdownButton(
                   items: _todayShoppingCategories
-                      .map((value) =>
-                          DropdownMenuItem(child: Text(value), value: value))
+                      .map(
+                        (value) =>
+                            DropdownMenuItem(child: Text(value), value: value),
+                      )
                       .toList(),
                   value: _selectedTodayShoppingCategory,
                   onChanged: (value) =>
@@ -312,7 +368,9 @@ class _MyHomePageState extends State<MyHomePage> {
           for (var element in _todayShoppingList[_selectedTodayShoppingCategory]
               ['Text'])
             createTodayShoppingTextList(element[0], element[1], element[2]),
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget createTodayShoppingList() {
@@ -331,23 +389,25 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget createTodayShoppingImageItem(String imagePath, String content,
       {int columnCount = 2}) {
     return Container(
-        padding: EdgeInsets.all(5.0),
-        width: 320.0 / columnCount,
-        // height: 320.0 / columnCount,
-        child: TextButton(
-            onPressed: () => viewDialog('$imagePath /// $content'),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Image.asset(imagePath,
-                    fit: BoxFit.cover,
-                    width: 320.0 / columnCount,
-                    height: 240.0 / columnCount),
-                Flexible(
-                    fit: FlexFit.loose,
-                    child: Text(content, style: TextStyle(color: Colors.black)))
-              ],
-            )));
+      padding: EdgeInsets.all(5.0),
+      width: 320.0 / columnCount,
+      // height: 320.0 / columnCount,
+      child: TextButton(
+        onPressed: () => viewDialog('$imagePath /// $content'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Image.asset(imagePath,
+                fit: BoxFit.cover,
+                width: 320.0 / columnCount,
+                height: 240.0 / columnCount),
+            Flexible(
+                fit: FlexFit.loose,
+                child: Text(content, style: TextStyle(color: Colors.black)))
+          ],
+        ),
+      ),
+    );
   }
 
   Widget createTodayShoppingTextList(
@@ -355,23 +415,28 @@ class _MyHomePageState extends State<MyHomePage> {
     return Column(children: [
       createSeparator(10.0),
       GestureDetector(
-          onTap: () => viewDialog('$preText / $content'),
-          child: Container(
-              margin: EdgeInsets.all(3.0),
-              child: Row(
-                children: [
-                  Container(
-                      child: Icon(iconData, color: Color(0xFF9900FF)),
-                      margin: EdgeInsets.all(2.0)),
-                  Container(
-                      child: Text(preText,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF9900FF))),
-                      margin: EdgeInsets.all(2.0)),
-                  Container(child: Text(content), margin: EdgeInsets.all(2.0))
-                ],
-              )))
+        onTap: () => viewDialog('$preText / $content'),
+        child: Container(
+          margin: EdgeInsets.all(3.0),
+          child: Row(
+            children: [
+              Container(
+                  child: Icon(iconData, color: Color(0xFF9900FF)),
+                  margin: EdgeInsets.all(2.0)),
+              Container(
+                  child: Text(
+                    preText,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF9900FF),
+                    ),
+                  ),
+                  margin: EdgeInsets.all(2.0)),
+              Container(child: Text(content), margin: EdgeInsets.all(2.0))
+            ],
+          ),
+        ),
+      )
     ]);
   }
 }
